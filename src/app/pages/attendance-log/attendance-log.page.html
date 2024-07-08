@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>attendanceLog</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-label class="txt" >Attendance Log</ion-label>
+  <ion-item class="label-group">
+    <ion-label class="inline-txt">date</ion-label>
+    <ion-label class="inline-txt">CheckIn</ion-label>
+    <ion-label class="inline-txt">CheckOut</ion-label>
+  </ion-item>
+  <ion-list *ngFor="let data of LogData">
+    <ion-item class="labelitems">
+      <ion-label>{{data.Date}}</ion-label>
+      <ion-label>{{data.InTime}}</ion-label>
+      <ion-label>{{data.OutTime}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>

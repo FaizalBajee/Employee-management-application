@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-icon slot="start" class="icon" name="accessibility-outline"></ion-icon>
+    <ion-title> Hello {{Name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="container">
+
+  <!-- attendance -->
+  <ion-card class="attendance" (click)="handleAttendance()">
+    <ion-card-header>
+      <img src="assets/img/Attendance.png" alt="Attendance">
+      <strong>Attendance</strong>
+    </ion-card-header>
+  </ion-card>
+  <!-- attendance log -->
+  <ion-card class="log" (click)="handleLog()">
+    <ion-card-header>
+      <img src="assets/img/log.png" alt="log">
+
+      <strong>Log</strong>
+
+    </ion-card-header>
+  </ion-card>
+  <!-- permission -->
+  <ion-card class="permission" (click)="handlePermission()">
+    <ion-card-header>
+      <img src="assets/img/Permission.png" alt="permission">
+
+      <strong>Permission</strong>
+
+    </ion-card-header>
+  </ion-card>
+  <!-- leave -->
+  <ion-card class="leave" (click)="handleLeave()">
+    <ion-card-header>
+      <img src="assets/img/Leave.png" alt="leave">
+
+      <strong>Leave</strong>
+
+    </ion-card-header>
+  </ion-card>
+  <!-- out punch -->
+  <ion-card class="out">
+    <ion-card-header>
+      <img src="assets/img/out.png" alt="outpunch">
+
+      <strong>Out Punch</strong>
+
+    </ion-card-header>
+  </ion-card>
+  <!-- plan -->
+  <ion-card class="plan">
+    <ion-card-header>
+      <img src="assets/img/Plan.png" alt="plan">
+
+      <strong>Plan</strong>
+
+    </ion-card-header>
+  </ion-card>
+</div>
+</ion-content>

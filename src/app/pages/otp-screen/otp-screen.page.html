@@ -1,0 +1,29 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>OTP Screen</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+  <div class="otp-wrapper">
+   <ion-card>
+    <ion-row class="otp-row">
+      <ion-col>
+        <ion-input class="x" required="true" maxlength="1" [(ngModel)]="OTP[0]" (keyup)="otpController($event, 0)"></ion-input>
+        <ion-input class="x" required="true" maxlength="1" [(ngModel)]="OTP[1]" (keyup)="otpController($event, 1)"></ion-input>
+        <ion-input class="x" required="true" maxlength="1" [(ngModel)]="OTP[2]" (keyup)="otpController($event, 2)"></ion-input>
+        <ion-input class="x" required="true" maxlength="1" [(ngModel)]="OTP[3]" (keyup)="otpController($event, 3)"></ion-input>
+        <ion-input class="x" required="true" maxlength="1" [(ngModel)]="OTP[4]" (keyup)="otpController($event, 4)"></ion-input>
+        <ion-input class="x" required="true" maxlength="1" [(ngModel)]="OTP[5]" (keyup)="otpController($event, 5)"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row class="otp-row">
+      <ion-button (click)="handleVerify()">Verify</ion-button>
+    </ion-row>
+  </ion-card>
+  </div>
+</ion-content>
+
+
+

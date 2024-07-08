@@ -1,0 +1,40 @@
+ion-content {
+    --padding-top: 20px;
+    --padding-start: 10px;
+    --padding-end: 10px;
+}
+
+.heading {
+    background-color: #CCA3FF;
+    height: 35px;
+    padding: 8px;
+    font-weight: bold;
+    color: #f8f8f8;
+    border-radius: 5px;
+}
+
+.items {
+    margin-top: 7px;
+    font-weight: bold;
+    color: grey;
+}
+
+.btn {
+     display: block;
+     padding-top: 20px;
+    --background: #3880ff; 
+    --background-hover: #4c8dff;
+    --background-activated: #2672ff; 
+    --color: white; 
+    --border-radius: 8px; 
+    --padding: 10px 20px; 
+    --font-size: 16px; 
+    --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    text-transform: uppercase; 
+    font-weight: bold; 
+  }
+  
+
+.reason {
+   height: 100px;
+}

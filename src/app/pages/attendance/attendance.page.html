@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>attendance</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item class="coords">
+    <ion-label >Latitude: {{latitude}}</ion-label>
+    <ion-label >Longitude: {{longitude}}</ion-label>
+  </ion-item>
+
+  <capacitor-google-map #map id="map"></capacitor-google-map>
+  <ion-Img *ngIf="BlobImage" [src]="BlobImage" class="overlay-image"></ion-Img>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" style="margin-bottom:80px; display: flex;padding: 10px;">
+    <ion-fab-button (click)="handleCamera()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+    <ion-button (click)="handleUpload()" color="success">Upload</ion-button>
+  </ion-fab>
+</ion-content>
