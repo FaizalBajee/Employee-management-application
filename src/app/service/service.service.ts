@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Data } from '@angular/router';
-import { LogData, PermissionData, PermissionHours, PermissionReason, ServerResponse } from '../model/model';
+import { LeaveData, LogData, PermissionData, PermissionHours, PermissionReason, ServerResponse } from '../model/model';
 
 @Injectable({
   providedIn: 'root'
@@ -72,5 +72,11 @@ export class ServiceService {
     payload = payload.append("Ldate", date)
     payload = payload.append("Lreason", reason)
     return this.http.post<ServerResponse>(environment.BaseUrl + "/applyLeave", payload)
+  }
+  //leave data(report)
+  leaveReport(): Observable<LeaveData[]> {
+    const num: any = localStorage.getItem('Number')
+    let params = new HttpParams().set("num", num)
+    return this.http.get<LeaveData[]>(environment.BaseUrl + "/leaveReport", { params })
   }
 }

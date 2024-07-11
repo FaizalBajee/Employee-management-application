@@ -6,13 +6,12 @@ ion-content {
 }
 
 .header {
-  display: block;
-  height: 35px;
-  font-weight: bold;
-  padding: 8px;
-  background-color: gray;
-  color: #f8f8f8;
-  border-radius: 5px;
+    background-color: #CCA3FF;
+    height: 35px;
+    padding: 8px;
+    font-weight: bold;
+    color: #f8f8f8;
+    border-radius: 5px;
 }
 
 .selectHeadings {
@@ -38,13 +37,10 @@ ion-content {
 }
 
 .btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100vw;
-  height: 35px;
+  height: 55px;
   padding-top: 20px;
- --background: #3880ff; 
+ --background: #9dbef8; 
  --background-hover: #4c8dff;
  --background-activated: #2672ff; 
  --color: white; 

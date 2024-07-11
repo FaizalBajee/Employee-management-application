@@ -20,6 +20,10 @@ export interface PermissionReason {
 export interface PermissionHours {
   Hours: string;
 }
+export interface LeaveData {
+  LeaveDate: string;
+  Status: string;
+}
 export interface ServerResponse {
   message: string;
   Phone: string | null

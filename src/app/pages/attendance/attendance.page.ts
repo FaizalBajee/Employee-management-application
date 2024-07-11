@@ -1,10 +1,12 @@
-//3F:43:15:04:5D:5C:75:41:54:D8:8D:FE:5B:7F:6E:8A:82:90:C0:79
+//1F:3E:E5:DE:22:D1:30:70:56:2F:B6:16:C4:19:D8:0F:15:89:B8:9D
+//AIzaSyA5UeXxqY61HwNlTECpJ7mlNmwZlHxtCt4
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap, Marker } from '@capacitor/google-maps';
 import { LoadingController, ToastController, ViewDidEnter } from '@ionic/angular';
 import { environment } from 'src/environments/environment.prod';
 import { Geolocation } from '@capacitor/geolocation';
-import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource, Photo ,CameraPermissionState} from '@capacitor/camera';
 import { ServiceService } from 'src/app/service/service.service';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
@@ -24,15 +26,15 @@ export class AttendancePage implements ViewDidEnter {
   constructor(private service: ServiceService, private route: Router, private platform: Platform, private loadingController: LoadingController, private toastController: ToastController) { }
 
   ionViewDidEnter(): void {
-    this.getCoord()
-    this.createMap()
+    this.getMap()
+    // this.createMap()
   }
 
 
   @ViewChild('map') mapRef!: ElementRef<HTMLElement>;
   newMap!: GoogleMap;
   //to get latitude and longitude
-  async getCoord() {
+  async getMap() {
     const loading = await this.loadingController.create({
       message: 'Getting current location...',
     });
@@ -42,6 +44,8 @@ export class AttendancePage implements ViewDidEnter {
       const coordinates = await Geolocation.getCurrentPosition();
       this.latitude = coordinates.coords.latitude;
       this.longitude = coordinates.coords.longitude;
+      //map funcation
+      this.createMap()
     } catch (error) {
       console.error('Error getting location', error);
     } finally {
@@ -95,25 +99,36 @@ export class AttendancePage implements ViewDidEnter {
       alert("Capture Image")
       return;
     }
-    const response = await fetch(this.BlobImage);
-    const blob = await response.blob();
-    this.service.handleAttendance(blob, this.FileName, this.latitude, this.longitude).subscribe(async res => {
-      if (res) {
-        const msg: any = res.message
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: 2000,
-          position: 'bottom',
-        })
-        await toast.present()
-        // alert(res)
-        this.BlobImage = ''
-        this.FileName = ''
-        this.latitude = ''
-        this.longitude = ''
-        this.route.navigate(['home-screen'])
-      }
-    })
+
+    const loading = await this.loadingController.create({
+      message: 'loading...',
+    });
+    await loading.present();
+    try {
+      const response = await fetch(this.BlobImage);
+      const blob = await response.blob();
+      this.service.handleAttendance(blob, this.FileName, this.latitude, this.longitude).subscribe(async res => {
+        if (res) {
+          const msg: any = res.message
+          const toast = await this.toastController.create({
+            message: msg,
+            duration: 2000,
+            position: 'bottom',
+          })
+          await toast.present()
+  
+          this.BlobImage = ''
+          this.FileName = ''
+          this.latitude = ''
+          this.longitude = ''
+          this.route.navigate(['home-screen'])
+        }
+      })
+    } catch (error) {
+      console.error('Error getting data', error);
+    } finally {
+      await loading.dismiss();
+    }
   }
 
 }

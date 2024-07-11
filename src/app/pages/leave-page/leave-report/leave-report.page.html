@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>leaveReport</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item class="items">
+    <ion-label>Date</ion-label>
+    <ion-label>Status</ion-label>
+  </ion-item>
+  <ion-list *ngFor="let data of LeaveData">
+    <ion-item>
+      <ion-label>{{data.LeaveDate}}</ion-label>
+      <ion-label>{{data.Status}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

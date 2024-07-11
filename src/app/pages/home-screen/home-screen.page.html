@@ -6,6 +6,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-app>
+    <ion-router-outlet></ion-router-outlet>
+  </ion-app>
 
   <div class="container">
 
@@ -20,45 +23,35 @@
   <ion-card class="log" (click)="handleLog()">
     <ion-card-header>
       <img src="assets/img/log.png" alt="log">
-
       <strong>Log</strong>
-
     </ion-card-header>
   </ion-card>
   <!-- permission -->
   <ion-card class="permission" (click)="handlePermission()">
     <ion-card-header>
       <img src="assets/img/Permission.png" alt="permission">
-
       <strong>Permission</strong>
-
     </ion-card-header>
   </ion-card>
   <!-- leave -->
   <ion-card class="leave" (click)="handleLeave()">
     <ion-card-header>
       <img src="assets/img/Leave.png" alt="leave">
-
       <strong>Leave</strong>
-
     </ion-card-header>
   </ion-card>
   <!-- out punch -->
   <ion-card class="out">
     <ion-card-header>
       <img src="assets/img/out.png" alt="outpunch">
-
       <strong>Out Punch</strong>
-
     </ion-card-header>
   </ion-card>
   <!-- plan -->
   <ion-card class="plan">
     <ion-card-header>
       <img src="assets/img/Plan.png" alt="plan">
-
       <strong>Plan</strong>
-
     </ion-card-header>
   </ion-card>
 </div>

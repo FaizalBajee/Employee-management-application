@@ -13,21 +13,22 @@
     <ion-label class="selectHeadings">Select Time *</ion-label>
   </ion-item>
 
-  <ion-datetime-button datetime="datetime" class="timePicker"></ion-datetime-button>
+  <ion-datetime-button datetime="datetime" class="timePicker" format="hh:mm A"></ion-datetime-button>
 
   <ion-modal [keepContentsMounted]="true">
     <ng-template>
-      <ion-datetime id="datetime" [showDefaultButtons]="true" presentation="time" displayFormat="hh:mm"
+      <ion-datetime id="datetime" [showDefaultButtons]="true" presentation="time" displayFormat="hh:mm A"
         (ionChange)="onTimeChange($event)"  [formatOptions]="{
           time: {
             hour: '2-digit',
             minute: '2-digit',
+            hour12: true
           },
         }"></ion-datetime>
     </ng-template>
   </ion-modal>
 
-  <ion-item style="--border-color: transparent; --ion-item-border-color: transparent;">
+  <ion-item style="--ion-item-border-color: transparent;">
     <ion-label class="selectHeadings">Select Hours *</ion-label>
   </ion-item>
   <ion-list>
@@ -38,7 +39,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-item style="--border-color: transparent; --ion-item-border-color: transparent;">
+  <ion-item style="--ion-item-border-color: transparent;">
     <ion-label class="selectHeadings">Select Reason *</ion-label>
   </ion-item>
   <ion-list>

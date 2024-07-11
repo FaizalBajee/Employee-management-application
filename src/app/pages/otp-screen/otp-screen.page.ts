@@ -1,23 +1,24 @@
 import { Component, ElementRef, OnInit, AfterViewInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonInput } from '@ionic/angular';
+import { IonInput, LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/service/authencation.service';
+import { ViewDidEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-otp-screen',
   templateUrl: './otp-screen.page.html',
   styleUrls: ['./otp-screen.page.scss'],
 })
-export class OtpScreenPage implements AfterViewInit {
+export class OtpScreenPage implements ViewDidEnter {
   @ViewChildren(IonInput)
   inputs!: QueryList<IonInput>;
 
   OTP = ['', '', '', '', '', ''];
 
 
-  constructor(private AuthService: AuthenticationService, private route: Router) { }
+  constructor(private AuthService: AuthenticationService, private route: Router, private loadingController: LoadingController) { }
 
-  ngAfterViewInit() {
+  ionViewDidEnter() {
     this.inputs.first.setFocus();
   }
 
@@ -38,15 +39,28 @@ export class OtpScreenPage implements AfterViewInit {
 
   async handleVerify() {
     let otp = this.OTP.join("")
-    this.AuthService.verifyOTP(otp).subscribe(Response => {
-      if (Response.message === "OTP is Verified") {
-        console.log("go to home page")
-        this.route.navigate(['home-screen'])
-      }else{
-        console.log(Response.message)
-        alert(Response.message)
-      }
-    })
+    const loading = await this.loadingController.create({
+      message: 'Getting Attendance Log...',
+    });
+    await loading.present();
+    try {
+      this.AuthService.verifyOTP(otp).subscribe(Response => {
+        if (Response.message === "OTP is Verified") {
+          console.log("go to home page")
+          this.route.navigate(['home-screen'])
+        } else {
+          console.log(Response.message)
+          alert(Response.message)
+        }
+      })
+    } catch (error) {
+      console.error('Error getting data', error);
+    } finally {
+      await loading.dismiss();
+    }
+
   }
 
 }
+//
+

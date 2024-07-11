@@ -7,7 +7,7 @@
 <ion-content>
   <div class="wrapper">
     <ion-card>
-      <ion-input class="items" label="Phone" required [(ngModel)]="Number" label-placement="floating" fill="outline"
+      <ion-input class="items" type="tel" label="Phone" required [(ngModel)]="Number" label-placement="floating" fill="outline"
         placeholder="Enter Phone Number"></ion-input>
       <ion-button (click)="handleSendOTP()">Send OTP</ion-button>
     </ion-card>

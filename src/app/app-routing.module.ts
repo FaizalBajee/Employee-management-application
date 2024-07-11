@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login-screen',
+    redirectTo: 'splash-Screen',
     pathMatch: 'full'
   },
   {
@@ -41,12 +41,21 @@ const routes: Routes = [
   },
   {
     path: 'leave',
-    loadChildren: () => import('./pages/leave/leave.module').then( m => m.LeavePageModule)
+    loadChildren: () => import('./pages/leave-page/leave/leave.module').then( m => m.LeavePageModule)
   },
   {
     path: 'otp-screen',
     loadChildren: () => import('./pages/otp-screen/otp-screen.module').then( m => m.OtpScreenPageModule)
-  }
+  },
+  {
+    path: 'leave-page',
+    loadChildren: () => import('./pages/leave-page/leave-page.module').then( m => m.LeavePagePageModule)
+  },
+  {
+    path: 'leave-report',
+    loadChildren: () => import('./pages/leave-page/leave-report/leave-report.module').then( m => m.LeaveReportPageModule)
+  },
+
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController, ViewDidEnter } from '@ionic/angular';
+import { LoadingController, ToastController, ViewDidEnter } from '@ionic/angular';
 import { PermissionHours, PermissionReason } from 'src/app/model/model';
 import { ServiceService } from 'src/app/service/service.service';
 
@@ -17,23 +17,25 @@ export class ApplyPermissionPage implements ViewDidEnter {
   permissionReason: PermissionReason[] = []
   permissionHours: PermissionHours[] = []
 
-  constructor(private service: ServiceService, private route: Router, private toastcontroller: ToastController) { }
+  constructor(private loadingController: LoadingController, private service: ServiceService, private route: Router, private toastcontroller: ToastController) { }
 
   ionViewDidEnter(): void {
     this.getReason()
     this.getHours()
   }
   //to get permission reason
-  getReason() {
+  async getReason() {
     this.service.permissionReason().subscribe(Response => {
       this.permissionReason = Response
     })
+
   }
   //to get permission hours
-  getHours() {
+  async getHours() {
     this.service.permissionHours().subscribe(Response => {
       this.permissionHours = Response
     })
+
   }
 
   formatTime(isoString: string): string {
@@ -59,7 +61,7 @@ export class ApplyPermissionPage implements ViewDidEnter {
     this.selectReason = event.detail.value
   }
 
-  handleSave() {
+  async handleSave() {
     if (this.selectedTime.length === 0) {
       alert("Select Time")
       return;
@@ -72,21 +74,30 @@ export class ApplyPermissionPage implements ViewDidEnter {
       alert("Select Reason")
       return;
     }
-    // alert("Time :" + this.selectedTime + "  Hours :" + this.selectedHours + "  Reasion :" + this.selectReason)
-    this.service.applyPermission(this.selectedTime, this.selectedHours, this.selectReason).subscribe(async Response => {
-      if (Response.message === "Permission uploaded successfully") {
-        const toast = await this.toastcontroller.create({
-          message: Response.message,
-          duration: 2000,
-          position: "bottom"
-        })
-        await toast.present()
+    const loading = await this.loadingController.create({
+      message: 'loading...',
+    });
+    await loading.present();
+    try {
+      this.service.applyPermission(this.selectedTime, this.selectedHours, this.selectReason).subscribe(async Response => {
+        if (Response.message === "Permission uploaded successfully") {
+          const toast = await this.toastcontroller.create({
+            message: Response.message,
+            duration: 2000,
+            position: "bottom"
+          })
+          await toast.present()
 
-        this.route.navigate(['permission'])
-      } else {
-        alert(Response.message)
-      }
-    })
+          this.route.navigate(['permission'])
+        } else {
+          alert(Response.message)
+        }
+      })
+    } catch (error) {
+      console.error('Error getting data', error);
+    } finally {
+      await loading.dismiss();
+    }
   }
 
 }

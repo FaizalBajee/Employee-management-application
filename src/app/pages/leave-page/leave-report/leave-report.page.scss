@@ -1,0 +1,12 @@
+ion-content{
+    --ion-background-color: #f8f8f8;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top:25px
+}
+.items{
+    --background: rgb(223, 186, 228); 
+    display: flex;
+    justify-content: space-between;
+    padding: 2px; 
+}
