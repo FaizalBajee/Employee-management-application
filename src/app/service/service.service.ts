@@ -79,4 +79,16 @@ export class ServiceService {
     let params = new HttpParams().set("num", num)
     return this.http.get<LeaveData[]>(environment.BaseUrl + "/leaveReport", { params })
   }
+  //insert out punch
+  OutPunch(): Observable<ServerResponse> {
+    const num: any = localStorage.getItem('Number')
+    let params = new HttpParams().set("num", num)
+    return this.http.put<ServerResponse>(environment.BaseUrl + "/outPunch", {}, { params })
+  }
+  //checking the user is punch in or not for outPunch
+  CheckOutPunch(): Observable<ServerResponse> {
+    const num: any = localStorage.getItem('Number')
+    let params = new HttpParams().set("num", num)
+    return this.http.get<ServerResponse>(environment.BaseUrl + "/checkOutPunch", { params })
+  }
 }

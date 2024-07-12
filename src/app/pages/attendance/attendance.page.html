@@ -12,7 +12,10 @@
   </ion-item>
 
   <capacitor-google-map #map id="map"></capacitor-google-map>
-  <ion-Img *ngIf="BlobImage" [src]="BlobImage" class="overlay-image"></ion-Img>
+  <ion-item class="overlay-image">
+    <ion-Img *ngIf="BlobImage" [src]="BlobImage" ></ion-Img>
+  </ion-item>
+ 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed" style="margin-bottom:80px; display: flex;padding: 10px;">
     <ion-fab-button (click)="handleCamera()">
       <ion-icon name="camera"></ion-icon>

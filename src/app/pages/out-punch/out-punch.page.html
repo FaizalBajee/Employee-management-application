@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>outPunch</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-label>Lat :{{latitude}}</ion-label>
+    <ion-label>lng :{{longitude}}</ion-label>
+  </ion-item>
+  <capacitor-google-map #map id="map"></capacitor-google-map>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" style="margin-bottom:80px; display: flex;padding: 10px;">
+    <ion-button id="present-alert" color="success">Punch</ion-button>
+  </ion-fab>
+  <ion-alert trigger="present-alert" header="Want to Punch Out!" [buttons]="alertButtons"
+    (didDismiss)="setResult($event)"></ion-alert>
+</ion-content>

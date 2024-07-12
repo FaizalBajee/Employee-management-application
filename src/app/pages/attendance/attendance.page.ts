@@ -33,6 +33,10 @@ export class AttendancePage implements ViewDidEnter {
 
   @ViewChild('map') mapRef!: ElementRef<HTMLElement>;
   newMap!: GoogleMap;
+
+
+
+  
   //to get latitude and longitude
   async getMap() {
     const loading = await this.loadingController.create({
@@ -44,7 +48,7 @@ export class AttendancePage implements ViewDidEnter {
       const coordinates = await Geolocation.getCurrentPosition();
       this.latitude = coordinates.coords.latitude;
       this.longitude = coordinates.coords.longitude;
-      //map funcation
+      //map function
       this.createMap()
     } catch (error) {
       console.error('Error getting location', error);
@@ -116,7 +120,7 @@ export class AttendancePage implements ViewDidEnter {
             position: 'bottom',
           })
           await toast.present()
-  
+          // alert(res)
           this.BlobImage = ''
           this.FileName = ''
           this.latitude = ''

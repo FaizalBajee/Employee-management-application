@@ -33,7 +33,7 @@ export class HomeScreenPage implements ViewDidEnter {
     });
   }
 
- 
+
   async handleBackButton() {
     if (this.routerOutlet && this.routerOutlet.canGoBack()) {
       this.routerOutlet.pop();
@@ -58,7 +58,7 @@ export class HomeScreenPage implements ViewDidEnter {
     await toast.present();
   }
 
-
+  //Attendance option
   async handleAttendance() {
     this.service.attendanceCheck().subscribe(Response => {
       if (Response.message === "Data exist") {
@@ -68,10 +68,11 @@ export class HomeScreenPage implements ViewDidEnter {
       }
     })
   }
+  //Attendance Log option
   handleLog() {
     this.route.navigate(['attendance-log'])
   }
-
+  //permission Option
   async handlePermission() {
     this.route.navigate(['permission'])
     // this.service.permissionCheck().subscribe(Response => {
@@ -83,8 +84,23 @@ export class HomeScreenPage implements ViewDidEnter {
     //   }
     // })
   }
+  //Leave option
   handleLeave() {
     this.route.navigate(['leave-page'])
+  }
+  //Out Punch Option
+  handleOutPunch() {
+    this.service.CheckOutPunch().subscribe(Response => {
+      if (Response.message === "Attendance Exist") {
+        this.route.navigate(['out-punch'])
+      } else {
+        alert(Response.message)
+      }
+    })
+  }
+  //Approve Option
+  handleApprove() {
+    this.route.navigate(['approve'])
   }
 
 }

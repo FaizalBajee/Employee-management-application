@@ -16,7 +16,7 @@
 
   <ion-modal [keepContentsMounted]="true">
     <ng-template>
-      <ion-datetime id="datetime" presentation="date" displayFormat="DD/MM/YYYY" [showDefaultButtons]="true"
+      <ion-datetime id="datetime" presentation="date" displayFormat="DD/MM/YYYY" [min]="tomorrow" [showDefaultButtons]="true"
         locale="en-GB" (ionChange)="onDateChange($event)" [formatOptions]="{
           date: { 
             day: '2-digit',

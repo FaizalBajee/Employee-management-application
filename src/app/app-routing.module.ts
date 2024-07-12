@@ -55,6 +55,14 @@ const routes: Routes = [
     path: 'leave-report',
     loadChildren: () => import('./pages/leave-page/leave-report/leave-report.module').then( m => m.LeaveReportPageModule)
   },
+  {
+    path: 'out-punch',
+    loadChildren: () => import('./pages/out-punch/out-punch.module').then( m => m.OutPunchPageModule)
+  },
+  {
+    path: 'approve',
+    loadChildren: () => import('./pages/approve/approve.module').then( m => m.ApprovePageModule)
+  },
 
 ];
 

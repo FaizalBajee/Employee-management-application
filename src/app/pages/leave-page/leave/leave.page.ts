@@ -2,16 +2,25 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { ServiceService } from 'src/app/service/service.service';
+import { ViewDidEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-leave',
   templateUrl: './leave.page.html',
   styleUrls: ['./leave.page.scss'],
 })
-export class LeavePage {
+export class LeavePage implements ViewDidEnter{
   reason: any = ''
   DATE: string = ''
+  tomorrow:any=''
   constructor(private service: ServiceService, private route: Router, private toastController: ToastController, private loadingController: LoadingController) { }
+
+    ionViewDidEnter(): void {
+      const today = new Date();
+      const tomorrowDate = new Date(today);
+      tomorrowDate.setDate(today.getDate() + 1);
+      this.tomorrow = tomorrowDate.toISOString().split('T')[0];
+    }
 
   onDateChange(event: any) {
     const isoString = event.detail.value;
