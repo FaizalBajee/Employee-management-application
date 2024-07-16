@@ -6,12 +6,14 @@ export interface LogData {
 }
 export interface PermissionData {
   id: string;
+  Name: string;
   Phone: string;
   Time: string;
   Hours: string;
   Reason: string;
   Status: string;
-  UpdateTime: string;
+  UpdatedTime: string;
+  ReportingTo: string;
   Date: string
 }
 export interface PermissionReason {
@@ -21,9 +23,16 @@ export interface PermissionHours {
   Hours: string;
 }
 export interface LeaveData {
+  id: number;
+  Phone: string;
+  Name: string;
+  LeaveReason: string;
   LeaveDate: string;
+  UpdatedTime: string;
   Status: string;
+  ReportingTo: string;
 }
+
 export interface ServerResponse {
   message: string;
   Phone: string | null

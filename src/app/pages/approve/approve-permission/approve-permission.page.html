@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>approvePermission</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor="let item of data">
+    <ion-card-header>
+      <ion-card-subtitle><span class="span">Name :</span> {{item.Name}}</ion-card-subtitle>
+      <ion-card-subtitle><span class="span">Hours :</span> {{item.Hours}}</ion-card-subtitle>
+      <ion-card-subtitle><span class="span">Reason :</span> {{item.Reason}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-button fill="clear" (click)="handleReject(item.Phone,item.UpdatedTime)">Reject</ion-button>
+    <ion-button fill="clear" (click)="handleApprove(item.Phone,item.id)">Approve</ion-button>
+  </ion-card>
+</ion-content>

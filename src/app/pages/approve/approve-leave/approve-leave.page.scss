@@ -1,0 +1,58 @@
+ion-content {
+    --background: #f9f9f9;
+  
+    ion-card {
+      margin: 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      
+      ion-card-header {
+        background-color: #d1deeb;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        padding: 16px;
+  
+        ion-card-title {
+          font-size: 1.4rem;
+          font-weight: bold;
+          color: #333;
+        }
+  
+        ion-card-subtitle {
+          font-size: 1rem;
+          color: #666;
+        }
+      }
+  
+      ion-card-content {
+        padding: 16px;
+        font-size: 1rem;
+        color: #555;
+      }
+  
+      ion-button {
+        margin: 8px;
+  
+        &.button-clear {
+          --color: #3880ff;
+          --background: transparent;
+          --color-activated: #3dc2ff;
+          --color-focused: #3dc2ff;
+          --color-hover: #3dc2ff;
+        }
+  
+        &:first-child {
+          --color: #ff3b30; // Red color for reject button
+        }
+  
+        &:last-child {
+          --color: #4caf50; // Green color for approve button
+        }
+      }
+    }
+  }
+  .span{
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+  }

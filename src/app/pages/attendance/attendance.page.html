@@ -7,13 +7,13 @@
 
 <ion-content [fullscreen]="true">
   <ion-item class="coords">
-    <ion-label >Latitude: {{latitude}}</ion-label>
-    <ion-label >Longitude: {{longitude}}</ion-label>
+    <ion-label >Lat: {{latitude}}</ion-label>
+    <ion-label >Lng: {{longitude}}</ion-label>
   </ion-item>
 
   <capacitor-google-map #map id="map"></capacitor-google-map>
   <ion-item class="overlay-image">
-    <ion-Img *ngIf="BlobImage" [src]="BlobImage" ></ion-Img>
+    <ion-img class="img rounded-image" *ngIf="BlobImage" [src]="BlobImage"></ion-img>
   </ion-item>
  
   <ion-fab vertical="bottom" horizontal="center" slot="fixed" style="margin-bottom:80px; display: flex;padding: 10px;">

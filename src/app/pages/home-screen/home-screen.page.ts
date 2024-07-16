@@ -60,13 +60,13 @@ export class HomeScreenPage implements ViewDidEnter {
 
   //Attendance option
   async handleAttendance() {
-    this.service.attendanceCheck().subscribe(Response => {
-      if (Response.message === "Data exist") {
-        alert("Attendance for today has already been recorded.")
-      } else {
-        this.route.navigate(['attendance'])
-      }
-    })
+      this.service.attendanceCheck().subscribe(Response => {
+        if (Response.message === "Data exist") {
+          alert("Attendance for today has already been recorded.")
+        } else {
+          this.route.navigate(['attendance'])
+        }
+      })
   }
   //Attendance Log option
   handleLog() {

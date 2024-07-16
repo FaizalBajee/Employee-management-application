@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-approve',
   templateUrl: './approve.page.html',
   styleUrls: ['./approve.page.scss'],
 })
-export class ApprovePage implements OnInit {
+export class ApprovePage {
 
-  constructor() { }
+  constructor(private route: Router) { }
 
-  ngOnInit() {
+  handlePermission() {
+    this.route.navigate(['approve-permission'])
+  }
+
+  handleLeave() {
+    this.route.navigate(['approve-leave'])
   }
 
 }

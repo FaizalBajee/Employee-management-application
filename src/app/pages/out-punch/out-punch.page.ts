@@ -23,8 +23,24 @@ export class OutPunchPage implements ViewDidEnter {
   newMap!: GoogleMap;
 
   ionViewDidEnter(): void {
-    this.getMap()
-    // this.createMap()
+    this.locationPermission()
+
+  }
+  //location permission
+  async locationPermission() {
+    try {
+      const status = await Geolocation.requestPermissions()
+      if (status.location === 'granted') {
+        //map function
+        this.getMap();
+      } else {
+        alert('location permission denied')
+      }
+    } catch (error) {
+      console.log("error handling :", error)
+      alert("error handling :" + error)
+    }
+
   }
 
   async getMap() {
@@ -114,7 +130,6 @@ export class OutPunchPage implements ViewDidEnter {
       role: 'confirm',
       //logic for Punch Out
       handler: () => {
-        //out punch function 
         this.outPunch()
       },
     },

@@ -6,7 +6,7 @@ import { GoogleMap, Marker } from '@capacitor/google-maps';
 import { LoadingController, ToastController, ViewDidEnter } from '@ionic/angular';
 import { environment } from 'src/environments/environment.prod';
 import { Geolocation } from '@capacitor/geolocation';
-import { Camera, CameraResultType, CameraSource, Photo ,CameraPermissionState} from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource, Photo, CameraPermissionState } from '@capacitor/camera';
 import { ServiceService } from 'src/app/service/service.service';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
@@ -26,17 +26,27 @@ export class AttendancePage implements ViewDidEnter {
   constructor(private service: ServiceService, private route: Router, private platform: Platform, private loadingController: LoadingController, private toastController: ToastController) { }
 
   ionViewDidEnter(): void {
-    this.getMap()
-    // this.createMap()
+    this.locationPermissions()
   }
-
+  //location permission
+  async locationPermissions() {
+    try {
+      const status = await Geolocation.requestPermissions();
+      if (status.location === 'granted') {
+        console.log('Location permission granted');
+        //map
+        this.getMap()
+      } else {
+        alert('Location permission denied');
+      }
+    } catch (error) {
+      console.error('Error requesting permissions:', error);
+    }
+  }
 
   @ViewChild('map') mapRef!: ElementRef<HTMLElement>;
   newMap!: GoogleMap;
 
-
-
-  
   //to get latitude and longitude
   async getMap() {
     const loading = await this.loadingController.create({
@@ -88,22 +98,32 @@ export class AttendancePage implements ViewDidEnter {
   }
   //Camera Funcation
   async handleCamera() {
-    const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Camera,
-      quality: 100
-    });
-    this.BlobImage = capturedPhoto.webPath
-    this.FileName = this.BlobImage?.substring(this.BlobImage.lastIndexOf('/') + 1)
+    try {
+      // Request camera permissions
+      const status = await Camera.requestPermissions();
+      if (status.camera === 'granted') {
+        const capturedPhoto = await Camera.getPhoto({
+          resultType: CameraResultType.Uri,
+          source: CameraSource.Camera,
+          quality: 100
+        });
+        this.BlobImage = capturedPhoto.webPath;
+        this.FileName = this.BlobImage.substr(this.BlobImage.lastIndexOf('/') + 1);
+      } else {
+        console.log('Camera permission denied');
+        alert('Camera permission denied. Please grant permission to use the camera.');
+      }
+    } catch (error) {
+      console.error('Error capturing photo', error);
+      alert('An error occurred while accessing the camera.' + error);
+    }
   }
-
   //Upload Details Function
   async handleUpload() {
     if (this.BlobImage.length === 0) {
       alert("Capture Image")
       return;
     }
-
     const loading = await this.loadingController.create({
       message: 'loading...',
     });

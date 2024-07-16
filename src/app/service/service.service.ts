@@ -36,8 +36,10 @@ export class ServiceService {
   }
   //Apply permission page service(upload)
   applyPermission(time: any, hours: any, reason: any): Observable<ServerResponse> {
+    const name: any = localStorage.getItem('Name')
     const num: any = localStorage.getItem('Number')
     let payload = new HttpParams()
+    payload = payload.append("name", name)
     payload = payload.append("num", num)
     payload = payload.append("time", time)
     payload = payload.append("hours", hours)
@@ -66,8 +68,10 @@ export class ServiceService {
   }
   //Apply Leave service
   applyLeave(date: any, reason: string): Observable<ServerResponse> {
+    const name: any = localStorage.getItem('Name')
     const num: any = localStorage.getItem("Number")
     let payload = new HttpParams()
+    payload = payload.append("name", name)
     payload = payload.append("num", num)
     payload = payload.append("Ldate", date)
     payload = payload.append("Lreason", reason)
@@ -90,5 +94,31 @@ export class ServiceService {
     const num: any = localStorage.getItem('Number')
     let params = new HttpParams().set("num", num)
     return this.http.get<ServerResponse>(environment.BaseUrl + "/checkOutPunch", { params })
+  }
+  //permission data for approve page
+  permissionDataForApprove(): Observable<PermissionData[]> {
+    const name:any =localStorage.getItem('Name')
+    const params =new HttpParams().set("name",name)
+    return this.http.get<PermissionData[]>(environment.BaseUrl + "/permissionApproveData",{params})
+  }
+  //Leave Data For Approve
+  leaveDataForApprove(): Observable<LeaveData[]> {
+    const name: any = localStorage.getItem('Name')
+    const params = new HttpParams().set("name", name)
+    return this.http.get<LeaveData[]>(environment.BaseUrl + "/leaveApproveData", { params })
+  }
+  //To approve or reject leave
+  approveLeave(sts: string, num: string, date: string): Observable<ServerResponse> {
+    let payload = new HttpParams()
+    payload = payload.append("status", sts)
+    let params = new HttpParams().set("num", num).set("LDate", date)
+    return this.http.put<ServerResponse>(environment.BaseUrl + "/approveLeave", payload, { params })
+  }
+  //to approve or reject permission
+  approvePermission(sts: string, num: string, id: string) {
+    let payload = new HttpParams()
+    payload = payload.append("status", sts)
+    let params = new HttpParams().set("num", num).set("id", id)
+    return this.http.put<ServerResponse>(environment.BaseUrl + "/approvePermission", payload, { params })
   }
 }

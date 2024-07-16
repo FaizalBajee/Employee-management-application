@@ -7,7 +7,16 @@ const routes: Routes = [
   {
     path: '',
     component: ApprovePage
-  }
+  },
+  // {
+  //   path: 'approve-permission',
+  //   loadChildren: () => import('./approve-permission/approve-permission.module').then( m => m.ApprovePermissionPageModule)
+  // },
+  // {
+  //   path: 'approve-leave',
+  //   loadChildren: () => import('./approve-leave/approve-leave.module').then( m => m.ApproveLeavePageModule)
+  // }
+
 ];
 
 @NgModule({

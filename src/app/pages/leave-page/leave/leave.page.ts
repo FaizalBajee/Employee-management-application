@@ -13,6 +13,11 @@ export class LeavePage implements ViewDidEnter{
   reason: any = ''
   DATE: string = ''
   tomorrow:any=''
+ isSunday = (dateString: string) => {
+  const date = new Date(dateString);
+  const utcDay = date.getUTCDay();
+  return utcDay !== 0;
+  };
   constructor(private service: ServiceService, private route: Router, private toastController: ToastController, private loadingController: LoadingController) { }
 
     ionViewDidEnter(): void {
