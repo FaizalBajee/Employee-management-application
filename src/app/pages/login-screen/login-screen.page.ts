@@ -12,9 +12,9 @@ export class LoginScreenPage {
 
   Number: any = "";
 
-  constructor(private AuthService: AuthenticationService, private route: Router,private loadingController:LoadingController) { }
+  constructor(private AuthService: AuthenticationService, private route: Router, private loadingController: LoadingController) { }
 
- async handleSendOTP() {
+  async handleSendOTP() {
     let len = this.Number
     if (len.length > 10) {
       alert("Enter the Valid Number")
@@ -32,11 +32,6 @@ export class LoginScreenPage {
     try {
       this.AuthService.checkNumber(this.Number).subscribe(res => {
         if (res.message === "user exist") {
-          let Number: any = res.Phone;
-          let Name: any = res.Name;
-          // console.log(Number)
-          localStorage.setItem('Name', Name)
-          localStorage.setItem('Number', Number);
           this.route.navigate(['otp-screen'])
         } else {
           alert("server error :" + res.message)
@@ -47,7 +42,7 @@ export class LoginScreenPage {
     } finally {
       await loading.dismiss();
     }
-    
+
 
   }
 

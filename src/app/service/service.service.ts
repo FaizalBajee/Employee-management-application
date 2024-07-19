@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Data } from '@angular/router';
-import { LeaveData, LogData, PermissionData, PermissionHours, PermissionReason, ServerResponse } from '../model/model';
+import { getFance, LeaveData, LogData, PermissionData, PermissionHours, PermissionReason, ServerResponse } from '../model/model';
 
 @Injectable({
   providedIn: 'root'
@@ -97,9 +97,9 @@ export class ServiceService {
   }
   //permission data for approve page
   permissionDataForApprove(): Observable<PermissionData[]> {
-    const name:any =localStorage.getItem('Name')
-    const params =new HttpParams().set("name",name)
-    return this.http.get<PermissionData[]>(environment.BaseUrl + "/permissionApproveData",{params})
+    const name: any = localStorage.getItem('Name')
+    const params = new HttpParams().set("name", name)
+    return this.http.get<PermissionData[]>(environment.BaseUrl + "/permissionApproveData", { params })
   }
   //Leave Data For Approve
   leaveDataForApprove(): Observable<LeaveData[]> {
@@ -120,5 +120,12 @@ export class ServiceService {
     payload = payload.append("status", sts)
     let params = new HttpParams().set("num", num).set("id", id)
     return this.http.put<ServerResponse>(environment.BaseUrl + "/approvePermission", payload, { params })
+  }
+  //get max min lat and lng
+  getFance(): Observable<getFance[]> {
+    let location: any = localStorage.getItem("Location")
+    console.log(location)
+    let params = new HttpParams().set("location", location)
+    return this.http.get<getFance[]>(environment.BaseUrl + "/getFance", { params })
   }
 }

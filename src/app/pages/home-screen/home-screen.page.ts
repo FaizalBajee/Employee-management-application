@@ -102,5 +102,10 @@ export class HomeScreenPage implements ViewDidEnter {
   handleApprove() {
     this.route.navigate(['approve'])
   }
+  handleDelete(){
+    localStorage.removeItem("Name")
+    localStorage.removeItem("Number")
+    alert("logout")
+  }
 
 }

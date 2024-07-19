@@ -47,6 +47,12 @@ export class OtpScreenPage implements ViewDidEnter {
       this.AuthService.verifyOTP(otp).subscribe(Response => {
         if (Response.message === "OTP is Verified") {
           console.log("go to home page")
+          let Number: any = Response.Phone;
+          let Name: any = Response.Name;
+          let Location: any = Response.Location
+          localStorage.setItem('Name', Name)
+          localStorage.setItem('Number', Number);
+          localStorage.setItem("Location", Location)
           this.route.navigate(['home-screen'])
         } else {
           console.log(Response.message)

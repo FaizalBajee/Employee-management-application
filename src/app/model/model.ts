@@ -32,9 +32,18 @@ export interface LeaveData {
   Status: string;
   ReportingTo: string;
 }
+export interface getFance {
+  id: number;
+  Locationcode: string;
+  MaxLat: string;
+  MinLat: string;
+  MaxLng: string;
+  MinLng: string;
+}
 
 export interface ServerResponse {
   message: string;
   Phone: string | null
   Name: string | null
+  Location: string | null
 }
