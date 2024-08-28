@@ -1,58 +1,88 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-icon slot="start" class="icon" name="accessibility-outline"></ion-icon>
-    <ion-title (click)="handleDelete()"> Hello {{Name}}</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-card class="top">
+    <ion-card-header class="hello"> Hello {{Name}}</ion-card-header>
+  </ion-card>
   <ion-app>
     <ion-router-outlet></ion-router-outlet>
   </ion-app>
+  
+  <ion-grid class="container">
+    <ion-row>
+      <ion-col size="6">
+        <!-- attendance -->
+        <ion-card class="attendance" (click)="handleAttendance()">
+          <ion-card-header>
+            <img src="assets/img/Attendance.png" alt="Attendance">
+            <strong style="display: flex; justify-content: center;">Attendance</strong>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <!-- attendance log -->
+        <ion-card class="log" (click)="handleLog()">
+          <ion-card-header class="imgName">
+            <img src="assets/img/log.png" alt="log">
+            <strong style="display: flex; justify-content: center;">Log</strong>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <!-- permission -->
+        <ion-card class="permission" (click)="handlePermission()">
+          <ion-card-header>
+            <img src="assets/img/Permission.png" alt="permission">
+            <strong style="display: flex; justify-content: center;">Permission</strong>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <!-- leave -->
+        <ion-card class="leave" (click)="handleLeave()">
+          <ion-card-header>
+            <img src="assets/img/Leave.png" alt="leave">
+            <strong style="display: flex; justify-content: center;">Leave</strong>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <!-- out punch -->
+        <ion-card class="out" (click)="handleOutPunch()">
+          <ion-card-header>
+            <img src="assets/img/out.png" style="height: 98px;width: 98px;" alt="outpunch">
+            <strong style="display: flex; justify-content: center;">Out Punch</strong>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <!-- late attendance -->
+        <ion-card class="lateAttendance" (click)="handleLate()">
+          <ion-card-header>
+            <img src="assets/img/late.png" style="height: 98px;width: 98px;" alt="Late">
+            <strong style="display: flex; justify-content: center;">Late ATT</strong>
+          </ion-card-header>
+        </ion-card>
 
-  <div class="container">
-
-  <!-- attendance -->
-  <ion-card class="attendance" (click)="handleAttendance()">
-    <ion-card-header>
-      <img src="assets/img/Attendance.png" alt="Attendance">
-      <strong>Attendance</strong>
-    </ion-card-header>
-  </ion-card>
-  <!-- attendance log -->
-  <ion-card class="log" (click)="handleLog()">
-    <ion-card-header>
-      <img src="assets/img/log.png" alt="log">
-      <strong>Log</strong>
-    </ion-card-header>
-  </ion-card>
-  <!-- permission -->
-  <ion-card class="permission" (click)="handlePermission()">
-    <ion-card-header>
-      <img src="assets/img/Permission.png" alt="permission">
-      <strong>Permission</strong>
-    </ion-card-header>
-  </ion-card>
-  <!-- leave -->
-  <ion-card class="leave" (click)="handleLeave()">
-    <ion-card-header>
-      <img src="assets/img/Leave.png" alt="leave">
-      <strong>Leave</strong>
-    </ion-card-header>
-  </ion-card>
-  <!-- out punch -->
-  <ion-card class="out" (click)="handleOutPunch()">
-    <ion-card-header>
-      <img src="assets/img/out.png" alt="outpunch">
-      <strong>Out Punch</strong>
-    </ion-card-header>
-  </ion-card>
-  <!-- plan -->
-  <ion-card class="plan" (click)="handleApprove()">
-    <ion-card-header>
-      <img src="assets/img/Approve.png" alt="Approve">
-      <strong>Approve</strong>
-    </ion-card-header>
-  </ion-card>
-</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <!-- Approve -->
+        <ion-card class="plan" (click)="handleApprove()">
+          <ion-card-header>
+            <img src="assets/img/Approve.png" alt="Approve">
+            <strong style="display: flex; justify-content: center;">Approve</strong>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+      
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- //testing -->
+  <ion-button (click)="handleDelete()">logout</ion-button>
 </ion-content>

@@ -35,3 +35,13 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+/* Ensure SweetAlert2 modal is on top */
+
+.my-swal-container {
+    z-index: 9999 !important; /* Adjust the z-index if needed */
+  }
+  ion-app {
+    z-index: 1; /* Ensure it's below the SweetAlert2 modal */
+    position: relative; /* Ensure z-index takes effect */
+  }
+  

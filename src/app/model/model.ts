@@ -1,5 +1,5 @@
 export interface LogData {
-  id: string
+  id: string;
   Date: string;
   InTime: string;
   OutTime: string | null;
@@ -14,10 +14,10 @@ export interface PermissionData {
   Status: string;
   UpdatedTime: string;
   ReportingTo: string;
-  Date: string
+  Date: string;
 }
 export interface PermissionReason {
-  Reason: string
+  Reason: string;
 }
 export interface PermissionHours {
   Hours: string;

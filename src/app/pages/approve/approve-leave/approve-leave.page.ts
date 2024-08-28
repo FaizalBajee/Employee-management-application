@@ -23,6 +23,7 @@ export class ApproveLeavePage implements ViewDidEnter {
   getData() {
     this.service.leaveDataForApprove().subscribe(Response => {
       this.data = Response
+      console.log(Response)
     })
   }
 

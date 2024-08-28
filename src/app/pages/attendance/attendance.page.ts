@@ -24,20 +24,19 @@ export class AttendancePage implements ViewDidEnter {
   longitude: any = ''
   FileName: any = ''
 
-  MinLat: string = ''
-  MinLng: string = ''
-  MaxLat: string = ''
-  MaxLng: string = ''
+  MinLat: any = ''
+  MinLng: any = ''
+  MaxLat: any = ''
+  MaxLng: any = ''
 
   constructor(private service: ServiceService, private route: Router, private platform: Platform, private loadingController: LoadingController, private toastController: ToastController) { }
 
-  ionViewDidEnter(): void {
-    this.locationPermissions()
+  async ionViewDidEnter() {
     this.getFance()
-
+    this.locationPermissions()
   }
   //to get max min lat and lng
-  getFance() {
+  async getFance() {
     this.service.getFance().subscribe(Response => {
       this.MinLat = Response[0].MinLat
       this.MinLng = Response[0].MinLng
@@ -146,8 +145,21 @@ export class AttendancePage implements ViewDidEnter {
     });
     await loading.present();
     try {
+      //to late attendance
+      const currentDate = new Date()
+      const startTime = new Date()
+      const endTime = new Date()
+      startTime.setHours(12)
+      startTime.setMinutes(11)
+      endTime.setHours(12)
+      endTime.setMinutes(50)
+      if (currentDate >= startTime && currentDate <= endTime) {
+        alert("late attendance" + currentDate)
+        this.LateAttendance()
+        return;
+      }
       //to check the current location is inside the maxmin lat and lng
-      if (this.latitude >= this.MinLat && this.latitude <= this.MaxLat && this.longitude >= this.MinLng && this.longitude <= this.MaxLng) {
+      // if (this.latitude >= this.MinLat && this.latitude <= this.MaxLat && this.longitude >= this.MinLng && this.longitude <= this.MaxLng) {
         const response = await fetch(this.BlobImage);
         const blob = await response.blob();
         this.service.handleAttendance(blob, this.FileName, this.latitude, this.longitude).subscribe(async res => {
@@ -163,6 +175,57 @@ export class AttendancePage implements ViewDidEnter {
             this.FileName = ''
             this.latitude = ''
             this.longitude = ''
+            this.MaxLat = ''
+            this.MinLat = ''
+            this.MaxLng = ''
+            this.MinLng = ''
+            this.route.navigate(['home-screen'])
+          }
+        })
+      // } else {
+      //   alert("Please go to the office Location to Punch your attendance")
+      // }
+
+
+    } catch (error) {
+      console.error('Error getting data', error);
+    } finally {
+      await loading.dismiss();
+    }
+  }
+
+  //Late Attendance
+  async LateAttendance() {
+    if (this.BlobImage.length === 0) {
+      alert("Capture Image")
+      return;
+    }
+    const loading = await this.loadingController.create({
+      message: 'loading...',
+    });
+    await loading.present();
+    try {
+      //to check the current location is inside the maxmin lat and lng
+      if (this.latitude >= this.MinLat && this.latitude <= this.MaxLat && this.longitude >= this.MinLng && this.longitude <= this.MaxLng) {
+        const response = await fetch(this.BlobImage);
+        const blob = await response.blob();
+        this.service.handleLateAttendance(blob, this.FileName, this.latitude, this.longitude).subscribe(async res => {
+          if (res) {
+            const msg: any = res.message
+            const toast = await this.toastController.create({
+              message: msg,
+              duration: 2000,
+              position: 'bottom',
+            })
+            await toast.present()
+            this.BlobImage = ''
+            this.FileName = ''
+            this.latitude = ''
+            this.longitude = ''
+            this.MaxLat = ''
+            this.MinLat = ''
+            this.MaxLng = ''
+            this.MinLng = ''
             this.route.navigate(['home-screen'])
           }
         })
@@ -176,5 +239,4 @@ export class AttendancePage implements ViewDidEnter {
       await loading.dismiss();
     }
   }
-
 }

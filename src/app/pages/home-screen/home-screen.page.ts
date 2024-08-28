@@ -4,6 +4,7 @@ import { LoadingController, ViewDidEnter } from '@ionic/angular';
 import { ServiceService } from 'src/app/service/service.service';
 import { App } from '@capacitor/app';
 import { Platform, ToastController, IonRouterOutlet } from '@ionic/angular';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home-screen',
@@ -11,10 +12,11 @@ import { Platform, ToastController, IonRouterOutlet } from '@ionic/angular';
   styleUrls: ['./home-screen.page.scss'],
 })
 export class HomeScreenPage implements ViewDidEnter {
+  
   @ViewChild(IonRouterOutlet, { static: true })
   routerOutlet!: IonRouterOutlet;
   private lastBackPressTime = 0;
-  private backPressInterval = 2000; // 2 seconds
+  private backPressInterval = 2000;
 
   Name: any = '';
 
@@ -60,13 +62,13 @@ export class HomeScreenPage implements ViewDidEnter {
 
   //Attendance option
   async handleAttendance() {
-      this.service.attendanceCheck().subscribe(Response => {
-        if (Response.message === "Data exist") {
-          alert("Attendance for today has already been recorded.")
-        } else {
-          this.route.navigate(['attendance'])
-        }
-      })
+    this.service.attendanceCheck().subscribe(Response => {
+      if (Response.message === "Data exist") {
+        alert("Attendance for today has already been recorded.")
+      } else {
+        this.route.navigate(['attendance'])
+      }
+    })
   }
   //Attendance Log option
   handleLog() {
@@ -74,15 +76,14 @@ export class HomeScreenPage implements ViewDidEnter {
   }
   //permission Option
   async handlePermission() {
-    this.route.navigate(['permission'])
-    // this.service.permissionCheck().subscribe(Response => {
-    //   if (Response.message === "Data exist") {
-    //     this.route.navigate(['permission'])
-    //   }
-    //   else {
-    //     alert("You have not recorded your attendance for today")
-    //   }
-    // })
+    this.service.permissionCheck().subscribe(Response => {
+      if (Response.message === "Data exist") {
+        this.route.navigate(['permission'])
+      }
+      else {
+        alert("You have not recorded your attendance for today")
+      }
+    })
   }
   //Leave option
   handleLeave() {
@@ -98,13 +99,18 @@ export class HomeScreenPage implements ViewDidEnter {
       }
     })
   }
+  //late attendance
+  handleLate() {
+    this.route.navigate(["attendance"])
+  }
   //Approve Option
   handleApprove() {
     this.route.navigate(['approve'])
   }
-  handleDelete(){
+  handleDelete() {
     localStorage.removeItem("Name")
     localStorage.removeItem("Number")
+    localStorage.removeItem("Location")
     alert("logout")
   }
 

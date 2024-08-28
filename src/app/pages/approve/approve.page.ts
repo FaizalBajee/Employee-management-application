@@ -17,5 +17,9 @@ export class ApprovePage {
   handleLeave() {
     this.route.navigate(['approve-leave'])
   }
+  //testing purpuse
+  async demo(){
+    console.log("testing..")
+  }
 
 }

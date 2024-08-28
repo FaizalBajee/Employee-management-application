@@ -3,6 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Data } from '@angular/router';
+import { catchError, map, tap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { throwError } from 'rxjs';
 import { getFance, LeaveData, LogData, PermissionData, PermissionHours, PermissionReason, ServerResponse } from '../model/model';
 
 @Injectable({
@@ -21,6 +24,16 @@ export class ServiceService {
     payload.append('lat', lat)
     payload.append('lng', lng)
     return this.http.post<ServerResponse>(environment.BaseUrl + "/attendance", payload)
+  }
+  //Late Attendance
+  handleLateAttendance(img: any, FileName: any, lat: any, lng: any): Observable<ServerResponse> {
+    const Number: any = localStorage.getItem('Number')
+    let payload = new FormData()
+    payload.append("num", Number)
+    payload.append("image", img, FileName)
+    payload.append("lat", lat)
+    payload.append("lng", lng)
+    return this.http.post<ServerResponse>(environment.BaseUrl + "/lateAttendance",payload)
   }
   //Attendance Log page service 
   getAttendanceLog(): Observable<LogData[]> {
@@ -105,7 +118,7 @@ export class ServiceService {
   leaveDataForApprove(): Observable<LeaveData[]> {
     const name: any = localStorage.getItem('Name')
     const params = new HttpParams().set("name", name)
-    return this.http.get<LeaveData[]>(environment.BaseUrl + "/leaveApproveData", { params })
+    return this.http.get<LeaveData[]>(environment.BaseUrl + "/leaveApproveData", { params }).pipe(map(response => response));
   }
   //To approve or reject leave
   approveLeave(sts: string, num: string, date: string): Observable<ServerResponse> {

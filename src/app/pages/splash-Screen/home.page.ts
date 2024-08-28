@@ -17,10 +17,10 @@ export class HomePage implements ViewDidEnter {
   checkFunction(){
      const num =localStorage.getItem('Number')
      if(!num){
-      this.route.navigate(['login-screen'])
+      this.route.navigate(['login-screen']);
      }
      else{
-      this.route.navigate(['home-screen'])
+      this.route.navigate(['home-screen']);
      }
   } 
 }
