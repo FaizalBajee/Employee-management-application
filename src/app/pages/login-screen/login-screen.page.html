@@ -1,9 +1,11 @@
-<ion-content>
-  <div class="wrapper">
-    <ion-card>
-      <ion-input class="items" type="tel" label="Phone" required [(ngModel)]="Number" label-placement="floating" fill="outline"
-        placeholder="Enter Phone Number"></ion-input>
-      <ion-button (click)="handleSendOTP()">Send OTP</ion-button>
-    </ion-card>
+<ion-content class="container">
+  <ion-img src="../../../assets/img/login.png" class="img" alt="Description of the image"></ion-img>
+  <ion-label class="verification">Verify your Number</ion-label>
+  <p class="para">Please enter your mobile number to receive a verification code</p>
+  <ion-item lines="none" class="inputContainer">
+    <ion-input class="input" type="tel" required [(ngModel)]="phoneNumber" placeholder="Enter Phone Number"></ion-input>
+  </ion-item>
+  <div class="btnContainer">
+    <ion-button (click)="handleSendOTP()" class="btn">Send OTP</ion-button>
   </div>
 </ion-content>

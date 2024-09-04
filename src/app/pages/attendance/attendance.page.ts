@@ -6,11 +6,12 @@ import { GoogleMap, Marker } from '@capacitor/google-maps';
 import { LoadingController, ToastController, ViewDidEnter } from '@ionic/angular';
 import { environment } from 'src/environments/environment.prod';
 import { Geolocation } from '@capacitor/geolocation';
-import { Camera, CameraResultType, CameraSource, Photo, CameraPermissionState } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ServiceService } from 'src/app/service/service.service';
 import { Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { getFance } from 'src/app/model/model';
+import { ToastService } from 'src/app/service/toast-service';
 
 @Component({
   selector: 'app-attendance',
@@ -29,7 +30,7 @@ export class AttendancePage implements ViewDidEnter {
   MaxLat: any = ''
   MaxLng: any = ''
 
-  constructor(private service: ServiceService, private route: Router, private platform: Platform, private loadingController: LoadingController, private toastController: ToastController) { }
+  constructor(private service: ServiceService, private route: Router, private toastService: ToastService, private loadingController: LoadingController, private toastController: ToastController) { }
 
   async ionViewDidEnter() {
     this.getFance()
@@ -137,7 +138,7 @@ export class AttendancePage implements ViewDidEnter {
   //Upload Details Function
   async handleUpload() {
     if (this.BlobImage.length === 0) {
-      alert("Capture Image")
+      this.toastService.toast("Capture Image")
       return;
     }
     const loading = await this.loadingController.create({
@@ -160,28 +161,28 @@ export class AttendancePage implements ViewDidEnter {
       }
       //to check the current location is inside the maxmin lat and lng
       // if (this.latitude >= this.MinLat && this.latitude <= this.MaxLat && this.longitude >= this.MinLng && this.longitude <= this.MaxLng) {
-        const response = await fetch(this.BlobImage);
-        const blob = await response.blob();
-        this.service.handleAttendance(blob, this.FileName, this.latitude, this.longitude).subscribe(async res => {
-          if (res) {
-            const msg: any = res.message
-            const toast = await this.toastController.create({
-              message: msg,
-              duration: 2000,
-              position: 'bottom',
-            })
-            await toast.present()
-            this.BlobImage = ''
-            this.FileName = ''
-            this.latitude = ''
-            this.longitude = ''
-            this.MaxLat = ''
-            this.MinLat = ''
-            this.MaxLng = ''
-            this.MinLng = ''
-            this.route.navigate(['home-screen'])
-          }
-        })
+      const response = await fetch(this.BlobImage);
+      const blob = await response.blob();
+      this.service.handleAttendance(blob, this.FileName, this.latitude, this.longitude).subscribe(async res => {
+        if (res) {
+          const msg: any = res.message
+          const toast = await this.toastController.create({
+            message: msg,
+            duration: 2000,
+            position: 'bottom',
+          })
+          await toast.present()
+          this.BlobImage = ''
+          this.FileName = ''
+          this.latitude = ''
+          this.longitude = ''
+          this.MaxLat = ''
+          this.MinLat = ''
+          this.MaxLng = ''
+          this.MinLng = ''
+          this.route.navigate(['home-screen'])
+        }
+      })
       // } else {
       //   alert("Please go to the office Location to Punch your attendance")
       // }
@@ -206,32 +207,32 @@ export class AttendancePage implements ViewDidEnter {
     await loading.present();
     try {
       //to check the current location is inside the maxmin lat and lng
-      if (this.latitude >= this.MinLat && this.latitude <= this.MaxLat && this.longitude >= this.MinLng && this.longitude <= this.MaxLng) {
-        const response = await fetch(this.BlobImage);
-        const blob = await response.blob();
-        this.service.handleLateAttendance(blob, this.FileName, this.latitude, this.longitude).subscribe(async res => {
-          if (res) {
-            const msg: any = res.message
-            const toast = await this.toastController.create({
-              message: msg,
-              duration: 2000,
-              position: 'bottom',
-            })
-            await toast.present()
-            this.BlobImage = ''
-            this.FileName = ''
-            this.latitude = ''
-            this.longitude = ''
-            this.MaxLat = ''
-            this.MinLat = ''
-            this.MaxLng = ''
-            this.MinLng = ''
-            this.route.navigate(['home-screen'])
-          }
-        })
-      } else {
-        alert("Please go to the office Location to Punch your attendance")
-      }
+      // if (this.latitude >= this.MinLat && this.latitude <= this.MaxLat && this.longitude >= this.MinLng && this.longitude <= this.MaxLng) {
+      const response = await fetch(this.BlobImage);
+      const blob = await response.blob();
+      this.service.handleLateAttendance(blob, this.FileName, this.latitude, this.longitude).subscribe(async res => {
+        if (res) {
+          const msg: any = res.message
+          const toast = await this.toastController.create({
+            message: msg,
+            duration: 2000,
+            position: 'bottom',
+          })
+          await toast.present()
+          this.BlobImage = ''
+          this.FileName = ''
+          this.latitude = ''
+          this.longitude = ''
+          this.MaxLat = ''
+          this.MinLat = ''
+          this.MaxLng = ''
+          this.MinLng = ''
+          this.route.navigate(['home-screen'])
+        }
+      })
+      // } else {
+      //   alert("Please go to the office Location to Punch your attendance")
+      // }
 
     } catch (error) {
       console.error('Error getting data', error);

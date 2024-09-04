@@ -20,8 +20,8 @@ export class ApplyPermissionPage implements ViewDidEnter {
   constructor(private loadingController: LoadingController, private service: ServiceService, private route: Router, private toastcontroller: ToastController) { }
 
   ionViewDidEnter(): void {
-    this.getReason()
-    this.getHours()
+    this.getReason();
+    this.getHours();
   }
   //to get permission reason
   async getReason() {

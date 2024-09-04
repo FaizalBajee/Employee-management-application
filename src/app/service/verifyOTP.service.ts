@@ -6,12 +6,8 @@ import { ServerResponse } from '../model/model';
 @Injectable({
     providedIn: 'root'
 })
-export class AuthenticationService {
+export class VerifyOTPService {
     constructor(private http: HttpClient) { }
-    checkNumber(num: any): Observable<ServerResponse> {
-        let params = new HttpParams().set("num", num);
-        return this.http.get<ServerResponse>(environment.BaseUrl + "/number", { params });
-    }
     verifyOTP(otp: any, num: any): Observable<ServerResponse> {
         let params = new HttpParams()
             .set("otp", otp)

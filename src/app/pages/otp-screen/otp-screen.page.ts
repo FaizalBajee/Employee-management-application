@@ -1,8 +1,9 @@
-import { Component, ElementRef, OnInit, AfterViewInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component,QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInput, LoadingController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/service/authencation.service';
 import { ViewDidEnter } from '@ionic/angular';
+import { ToastService } from 'src/app/service/toast-service';
 
 @Component({
   selector: 'app-otp-screen',
@@ -12,39 +13,36 @@ import { ViewDidEnter } from '@ionic/angular';
 export class OtpScreenPage implements ViewDidEnter {
   @ViewChildren(IonInput)
   inputs!: QueryList<IonInput>;
-
+  phoneNumber?: number;
   OTP = ['', '', '', '', '', ''];
 
-
-  constructor(private AuthService: AuthenticationService, private route: Router, private loadingController: LoadingController) { }
+  constructor(private AuthService: AuthenticationService, private toastService: ToastService, private route: Router, private loadingController: LoadingController) {
+    const navigation = this.route.getCurrentNavigation();
+    const state = navigation?.extras.state as { Number: any }
+    this.phoneNumber = state?.Number
+    console.log(this.phoneNumber)
+  }
 
   ionViewDidEnter() {
     this.inputs.first.setFocus();
   }
 
-  otpController(event: KeyboardEvent, index: number): void {
+  otpController(event: KeyboardEvent, index: number) {
     const input = event.target as HTMLInputElement;
     const value = input.value;
+    console.log(value)
 
-    if (value && index < this.inputs.length - 1) {
-      setTimeout(() => {
-        this.inputs.toArray()[index + 1].setFocus();
-      }, 10);
-    } else if (event.key === 'Backspace' && index > 0) {
-      setTimeout(() => {
-        this.inputs.toArray()[index - 1].setFocus();
-      }, 10);
+    if (value.length === 1 && index < this.OTP.length - 1) {
+      this.inputs.toArray()[index + 1].setFocus();
+    } else if (value.length === 0 && index > 0) {
+      this.inputs.toArray()[index - 1].setFocus();
     }
   }
 
   async handleVerify() {
     let otp = this.OTP.join("")
-    const loading = await this.loadingController.create({
-      message: 'Getting Attendance Log...',
-    });
-    await loading.present();
     try {
-      this.AuthService.verifyOTP(otp).subscribe(Response => {
+      this.AuthService.verifyOTP(otp, this.phoneNumber).subscribe(Response => {
         if (Response.message === "OTP is Verified") {
           console.log("go to home page")
           let Number: any = Response.Phone;
@@ -56,17 +54,14 @@ export class OtpScreenPage implements ViewDidEnter {
           this.route.navigate(['home-screen'])
         } else {
           console.log(Response.message)
-          alert(Response.message)
+          this.toastService.toast(Response.message)
         }
       })
     } catch (error) {
-      console.error('Error getting data', error);
-    } finally {
-      await loading.dismiss();
+      console.error('error handling : ', error);
+      this.toastService.toast('error handling : ' + error);
     }
-
   }
 
 }
-//
 

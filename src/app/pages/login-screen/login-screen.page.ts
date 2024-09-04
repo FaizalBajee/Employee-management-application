@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authencation.service';
+import { ToastService } from 'src/app/service/toast-service';
 
 @Component({
   selector: 'app-login-screen',
@@ -9,41 +9,26 @@ import { AuthenticationService } from 'src/app/service/authencation.service';
   styleUrls: ['./login-screen.page.scss'],
 })
 export class LoginScreenPage {
-
-  Number: any = "";
-
-  constructor(private AuthService: AuthenticationService, private route: Router, private loadingController: LoadingController) { }
+  phoneNumber: any = "";
+  constructor(private AuthService: AuthenticationService, private toastService: ToastService, private router: Router) { }
 
   async handleSendOTP() {
-    let len = this.Number
-    if (len.length > 10) {
-      alert("Enter the Valid Number")
+    if (this.phoneNumber.length < 10 || this.phoneNumber.length > 10) {
+      this.toastService.toast("Please enter the valid number")
       return;
     }
-    if (len.length < 10) {
-      alert("Enter the Valid Number")
-      return;
-    }
-
-    const loading = await this.loadingController.create({
-      message: 'Getting User Data...',
-    });
-    await loading.present();
     try {
-      this.AuthService.checkNumber(this.Number).subscribe(res => {
+      this.AuthService.checkNumber(this.phoneNumber).subscribe(res => {
         if (res.message === "user exist") {
-          this.route.navigate(['otp-screen'])
+          const Number = this.phoneNumber;
+          this.router.navigate(['otp-screen'], { state: { Number } });
         } else {
-          alert("server error :" + res.message)
+          this.toastService.toast("server error :" + res.message)
         }
       })
     } catch (error) {
-      console.error('Error getting data', error);
-    } finally {
-      await loading.dismiss();
+      this.toastService.toast('Error getting data'+ error);
     }
-
-
   }
 
 }

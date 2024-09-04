@@ -3,12 +3,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'splash-Screen',
-    loadChildren: () => import('./pages/splash-Screen/home.module').then(m => m.HomePageModule)
-  },
-  {
     path: '',
-    redirectTo: 'splash-Screen',
+    redirectTo: 'login-screen',
     pathMatch: 'full'
   },
   {
@@ -71,10 +67,7 @@ const routes: Routes = [
     path: 'approve-leave',
     loadChildren: () => import('./pages/approve/approve-leave/approve-leave.module').then( m => m.ApproveLeavePageModule)
   },
-  {
-    path: 'demo',
-    loadChildren: () => import('./pages/demo/demo.module').then( m => m.DEMOPageModule)
-  },
+
 
 
 ];
