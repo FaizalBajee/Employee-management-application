@@ -4,7 +4,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap, Marker } from '@capacitor/google-maps';
 import { LoadingController, ToastController, ViewDidEnter } from '@ionic/angular';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ServiceService } from 'src/app/service/service.service';
@@ -86,7 +86,6 @@ export class AttendancePage implements ViewDidEnter {
 
   //Display Map function
   async createMap() {
-    console.log("createMap is calling")
     const coordinates = await Geolocation.getCurrentPosition()
     this.newMap = await GoogleMap.create({
       id: 'my-cool-map',

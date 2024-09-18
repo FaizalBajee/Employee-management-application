@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-
 import { AttendanceLogPageRoutingModule } from './attendance-log-routing.module';
 
 import { AttendanceLogPage } from './attendance-log.page';
@@ -13,7 +12,8 @@ import { AttendanceLogPage } from './attendance-log.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AttendanceLogPageRoutingModule
+    AttendanceLogPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [AttendanceLogPage]
 })

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewDidEnter } from '@ionic/angular';
-import { ServiceService } from 'src/app/service/service.service';
-import { LogData } from 'src/app/model/model';
 import { LoadingController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GetAttendanceLogService } from 'src/app/service/getAttendanceLog.service';
+import { attendanceLogModel } from 'src/app/model/attendanceLog.model';
 @Component({
   selector: 'app-attendance-log',
   templateUrl: './attendance-log.page.html',
@@ -10,22 +11,25 @@ import { LoadingController } from '@ionic/angular';
 })
 
 export class AttendanceLogPage implements ViewDidEnter {
-
-  constructor(private service: ServiceService, private loadingController: LoadingController) { }
-
-  LogData: LogData[] = [];
+  LogData: attendanceLogModel[] = [];
+  dateForm!: FormGroup;
+  constructor(private getAttendanceLogService: GetAttendanceLogService, private fb: FormBuilder, private loadingController: LoadingController) {
+    this.dateForm = this.fb.group({
+      from: ['', Validators.required],
+      to: ['', Validators.required]
+    })
+  }
 
   ionViewDidEnter(): void {
     this.getAttendanceLog()
   }
-  //get data funtion
   async getAttendanceLog() {
     const loading = await this.loadingController.create({
       message: 'Getting Attendance Log...',
     });
     await loading.present();
     try {
-      this.service.getAttendanceLog().subscribe(res => {
+      this.getAttendanceLogService.getAttendanceLog().subscribe(res => {
         console.log(res)
         this.LogData = res
       })
@@ -34,7 +38,17 @@ export class AttendanceLogPage implements ViewDidEnter {
     } finally {
       await loading.dismiss();
     }
-
+  }
+  fromDatePicker(event: any) {
+    this.dateForm.patchValue({ from: event.detail.value })
+  }
+  toDatePicker(event: any) {
+    this.dateForm.patchValue({ to: event.detail.value })
+  }
+  handleShow() {
+    if (this.dateForm.valid) {
+      console.log('from :' + this.dateForm.value.from)
+    }
   }
 
 }

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-back-button slot="start"></ion-back-button>
-    <ion-title>attendance</ion-title>
+    <ion-title>Attendance</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
   </ion-item>
 
   <capacitor-google-map #map id="map"></capacitor-google-map>
-  <ion-item class="overlay-image">
+  <ion-item lines="none" class="overlay-image">
     <ion-img class="img rounded-image" *ngIf="BlobImage" [src]="BlobImage"></ion-img>
   </ion-item>
  
@@ -20,6 +20,6 @@
     <ion-fab-button (click)="handleCamera()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
-    <ion-button (click)="handleUpload()" color="success">Upload</ion-button>
+    <ion-button (click)="handleUpload()" color="success">Check In</ion-button>
   </ion-fab>
 </ion-content>

@@ -27,4 +27,20 @@ ion-content{
   .labelitems{
     display: flex;
   }
-  
+  .btn {
+    height: 40px;
+    width: 150px;
+    --border-radius: 10px;
+    --border-width: 2px;
+    --border-color: #926de9;
+    --background: linear-gradient(135deg, #d5aedf, #c5b6e7);
+    --color: #fff;
+    --transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+    --box-shadow: 0 4px 6px rgba(196, 102, 250, 0.3);
+
+    &:hover {
+      --background: linear-gradient(135deg, #d5aedf, #c5b6e7);
+      transform: translateY(-2px);
+      --box-shadow: 0 6px 10px rgba(210, 137, 252, 0.4);
+    }
+  }

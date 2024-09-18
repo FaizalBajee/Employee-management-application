@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, ToastController, ViewDidEnter } from '@ionic/angular';
-import { LeaveData } from 'src/app/model/model';
+import { ViewDidEnter } from '@ionic/angular';
 import { ServiceService } from 'src/app/service/service.service';
-import { NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { leaveDataModel } from 'src/app/model/leaveData.model';
+import { ToastService } from 'src/app/service/toast-service';
 
 @Component({
   selector: 'app-approve-leave',
@@ -12,9 +11,9 @@ import { Router } from '@angular/router';
 })
 export class ApproveLeavePage implements ViewDidEnter {
 
-  constructor(private route: Router, private toastController: ToastController, private service: ServiceService, private loadingController: LoadingController, private navCtrl: NavController) { }
+  constructor( private toastService: ToastService, private service: ServiceService) { }
 
-  data: LeaveData[] = []
+  data: leaveDataModel[] = []
 
   ionViewDidEnter(): void {
     this.getData()
@@ -32,25 +31,17 @@ export class ApproveLeavePage implements ViewDidEnter {
     this.service.approveLeave(status, Phone, LDate).subscribe(async response => {
       console.log(response.message);
       this.getData();
-      const toast = await this.toastController.create({
-        message: response.message,
-        duration: 400
-      })
-      await toast.present()
+      this.toastService.toast(response.message)
     })
-}
+  }
 
   async handleApprove(Phone: string, LDate: string) {
-  const status = 'Approved';
-  this.service.approveLeave(status, Phone, LDate).subscribe(async response => {
-    console.log(response.message);
-    this.getData();
-    const toast = await this.toastController.create({
-      message: response.message,
-      duration: 400
+    const status = 'Approved';
+    this.service.approveLeave(status, Phone, LDate).subscribe(async response => {
+      console.log(response.message);
+      this.getData();
+      this.toastService.toast(response.message)
     })
-    await toast.present()
-  })
-}
+  }
 
 }

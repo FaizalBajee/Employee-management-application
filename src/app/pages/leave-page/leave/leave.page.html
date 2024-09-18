@@ -12,30 +12,24 @@
   <ion-item style="--ion-item-border-color: transparent;">
     <ion-label class="items">Select Date</ion-label>
   </ion-item>
-  <ion-datetime-button datetime="datetime"></ion-datetime-button>
-
-  <ion-modal [keepContentsMounted]="true">
-    <ng-template>
-      <ion-datetime id="datetime" [isDateEnabled]="isSunday" presentation="date" displayFormat="DD/MM/YYYY" [min]="tomorrow" [showDefaultButtons]="true"
-        locale="en-GB" (ionChange)="onDateChange($event)" [formatOptions]="{
-          date: { 
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-          }
-        }"></ion-datetime>
-    </ng-template>
-  </ion-modal>
-  <ion-item style="--ion-item-border-color: transparent;">
-    <ion-label class="items">Select Reason</ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-input class="reason" label="Reason" label-placement="floating" fill="outline" placeholder="Enter text"
-      [(ngModel)]="reason"></ion-input>
-  </ion-item>
-
-  <ion-button class="btn" (click)="handleSave()">
-    save
-  </ion-button>
- 
+  <!-- <ion-datetime-button datetime="datetime"></ion-datetime-button> -->
+  <form [formGroup]="leaveForm" (ngSubmit)="handleSave()">
+    <ion-input class="dateInput" formControlName="date" id="date_cal" [readonly]="true" [value]="leaveForm.value.date |date" fill="outline" placeholder="Enter the Date"></ion-input>
+    <ion-modal trigger="date_cal" [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime presentation="date" (ionChange)="onDateChange($event)" [isDateEnabled]="isSunday" [min]="tomorrow"
+          [showDefaultButtons]="true"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+    <ion-item style="--ion-item-border-color: transparent;">
+      <ion-label class="items">Select Reason</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-input class="reason" label="Reason" formControlName="reason" label-placement="floating" fill="outline" placeholder="Enter text"
+        ></ion-input>
+    </ion-item>
+    <ion-button [disabled]="leaveForm.invalid" class="btn" type="submit">
+      save
+    </ion-button>
+  </form>
 </ion-content>

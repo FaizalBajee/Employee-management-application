@@ -19,6 +19,13 @@ ion-content {
     font-weight: bold;
     color: grey;
 }
+.dateInput{
+    width: 200px;
+    display: flex;
+    justify-content: start;
+    margin-left: 20px;
+    // border-bottom: 1px solid black;
+}
 
 .btn {
      display: block;

@@ -9,7 +9,7 @@ export class ToastService {
   async toast(message: any) {
     const toasts = await this.toastController.create({
       message: message,
-      duration: 1500,
+      duration: 2000,
       position: "bottom"
     })
     await toasts.present()

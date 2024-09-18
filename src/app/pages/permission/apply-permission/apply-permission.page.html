@@ -6,52 +6,56 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-item style="--border-color: transparent; --ion-item-border-color: transparent;">
-    <ion-label class="header">Permission Info</ion-label>
-  </ion-item>
-  <ion-item style="--border-color: transparent; --ion-item-border-color: transparent;">
-    <ion-label class="selectHeadings">Select Time </ion-label>
-  </ion-item>
+  <form [formGroup]="permissionForm" (ngSubmit)="handleSave()">
 
-  <ion-datetime-button datetime="datetime" locale="en-GB" hourCycle="h12" class="timePicker" ></ion-datetime-button>
- 
-  <ion-modal [keepContentsMounted]="true">
-    <ng-template>
-      <ion-datetime id="datetime" value="2023-11-02T12:00:00" locale="en-GB" [showDefaultButtons]="true" presentation="time" displayFormat="hh:mm A"
-        (ionChange)="onTimeChange($event)"  [formatOptions]="{
-          time: {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-          },
-        }"></ion-datetime>
-    </ng-template>
-  </ion-modal>
-
-  <ion-item style="--ion-item-border-color: transparent;">
-    <ion-label class="selectHeadings">Select Hours </ion-label>
-  </ion-item>
-  <ion-list>
-    <ion-item class="items">
-      <ion-select aria-label="Hours" interface="popover" placeholder="--Select--" (ionChange)="handleHours($event)">
-        <ion-select-option *ngFor="let data of permissionHours" [value]="data.Hours">{{data.Hours}}</ion-select-option>
-      </ion-select>
+    <ion-item style="--border-color: transparent; --ion-item-border-color: transparent;">
+      <ion-label class="header">Permission Info</ion-label>
     </ion-item>
-  </ion-list>
-
-  <ion-item style="--ion-item-border-color: transparent;">
-    <ion-label class="selectHeadings">Select Reason </ion-label>
-  </ion-item>
-  <ion-list>
-    <ion-item class="items">
-      <ion-select aria-label="Hours" interface="popover" placeholder="--Select--" (ionChange)="handleReason($event)">
-        <ion-select-option *ngFor="let data of permissionReason"
-          [value]="data.Reason">{{data.Reason}}</ion-select-option>
-      </ion-select>
+    <ion-item style="--border-color: transparent; --ion-item-border-color: transparent;">
+      <ion-label class="selectHeadings">Select Time </ion-label>
     </ion-item>
-  </ion-list>
-  <ion-item style="--border-color: transparent; --ion-item-border-color: transparent;">
-    <ion-button (click)="handleSave()" class="btn">Save</ion-button>
-  </ion-item>
 
+    <!-- <ion-datetime-button datetime="datetime" locale="en-GB" hourCycle="h12" class="timePicker"></ion-datetime-button> -->
+    <ion-item class="items">
+      <ion-input [readonly]="true" id="open_cal" formControlName="time"
+        [value]="permissionForm.value.time | date:'shortTime'" placeholder="Enter the Time"></ion-input>
+    </ion-item>
+
+    <ion-modal trigger="open_cal" [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime presentation="time" [min]="minTime" (ionChange)="onTimeChange($event)" value="2023-11-02T12:00:00"
+          [showDefaultButtons]="true"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+
+    <ion-item style="--ion-item-border-color: transparent;">
+      <ion-label class="selectHeadings">Select Hours </ion-label>
+    </ion-item>
+    <ion-list>
+      <ion-item class="items">
+        <ion-select aria-label="Hours" interface="popover" formControlName="hours" placeholder="--Select--"
+          (ionChange)="handleHours($event)">
+          <ion-select-option *ngFor="let data of permissionHours"
+            [value]="data.Hours">{{data.Hours}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-item style="--ion-item-border-color: transparent;">
+      <ion-label class="selectHeadings">Select Reason </ion-label>
+    </ion-item>
+    <ion-list>
+      <ion-item class="items">
+        <ion-select aria-label="Hours" interface="popover" formControlName="reason" placeholder="--Select--"
+          (ionChange)="handleReason($event)">
+          <ion-select-option *ngFor="let data of permissionReason"
+            [value]="data.Reason">{{data.Reason}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-item style="--border-color: transparent; --ion-item-border-color: transparent;">
+      <ion-button type="submit" class="btn">Save</ion-button>
+    </ion-item>
+
+  </form>
 </ion-content>

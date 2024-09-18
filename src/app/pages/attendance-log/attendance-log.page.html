@@ -7,7 +7,25 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-label class="txt" >Attendance Log</ion-label>
+  <ion-label class="txt">Attendance Log</ion-label>
+  <form [formGroup]="dateForm" (ngSubmit)="handleShow()">
+    <ion-item lines="none" class="dateContainer">
+      <ion-input id="from_cal" [value]="dateForm.value.from | date" [readonly]="true" formControlName="from" placeholder="From"></ion-input>
+      <ion-input id="to_cal" [value]="dateForm.value.to | date" [readonly]="true" formControlName="to" placeholder="To"></ion-input>
+      <ion-button class="btn" [disabled]="dateForm.invalid" type="submit">Show</ion-button>
+    </ion-item>
+    <ion-modal trigger="from_cal" [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime presentation="date" (ionChange)="fromDatePicker($event)"
+          [showDefaultButtons]="true"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+    <ion-modal trigger="to_cal" [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime presentation="date" (ionChange)="toDatePicker($event)" [showDefaultButtons]="true"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+  </form>
   <ion-item class="label-group">
     <ion-label class="inline-txt">date</ion-label>
     <ion-label class="inline-txt">CheckIn</ion-label>

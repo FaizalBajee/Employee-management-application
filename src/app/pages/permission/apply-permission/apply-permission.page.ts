@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, ToastController, ViewDidEnter } from '@ionic/angular';
 import { PermissionHours, PermissionReason } from 'src/app/model/model';
+import { permissionDataModel } from 'src/app/model/permissionData.model';
+import { applyPermissionService } from 'src/app/service/applyPermission.service';
 import { ServiceService } from 'src/app/service/service.service';
+import { ToastService } from 'src/app/service/toast-service';
 
 @Component({
   selector: 'app-apply-permission',
@@ -10,68 +14,67 @@ import { ServiceService } from 'src/app/service/service.service';
   styleUrls: ['./apply-permission.page.scss'],
 })
 export class ApplyPermissionPage implements ViewDidEnter {
+  permissionForm!: FormGroup;
+  minTime?: string;
+  permissionReason: permissionDataModel[] = []
+  permissionHours: permissionDataModel[] = []
 
-  selectedTime: any = '';
-  selectedHours: any = '';
-  selectReason: any = '';
-  permissionReason: PermissionReason[] = []
-  permissionHours: PermissionHours[] = []
-
-  constructor(private loadingController: LoadingController, private service: ServiceService, private route: Router, private toastcontroller: ToastController) { }
+  constructor(private loadingController: LoadingController, private permissionService: applyPermissionService, private toastService: ToastService, private fb: FormBuilder, private service: ServiceService) {
+    this.permissionForm = this.fb.group({
+      time: ['', Validators.required],
+      hours: ['', Validators.required],
+      reason: ['', Validators.required]
+    })
+    this.minTimeFun()
+  }
 
   ionViewDidEnter(): void {
     this.getReason();
     this.getHours();
   }
-  //to get permission reason
   async getReason() {
     this.service.permissionReason().subscribe(Response => {
-      this.permissionReason = Response
+      this.permissionReason = Response;
     })
-
   }
-  //to get permission hours
   async getHours() {
     this.service.permissionHours().subscribe(Response => {
       this.permissionHours = Response
     })
-
   }
-
-  formatTime(isoString: string): string {
-    const date = new Date(isoString);
-    let hours = date.getHours();
-    const minutes = ('0' + date.getMinutes()).slice(-2);
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-
-    return `${hours}:${minutes} ${ampm}`;
+  minTimeFun() {
+    const now = new Date();
+    const minTimeDate = new Date(now.getTime());
+    const year = minTimeDate.getFullYear();
+    const month = ('0' + (minTimeDate.getMonth() + 1)).slice(-2);
+    const day = ('0' + minTimeDate.getDate()).slice(-2);
+    const hours = ('0' + minTimeDate.getHours()).slice(-2);
+    const minutes = ('0' + minTimeDate.getMinutes()).slice(-2);
+    this.minTime = `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 
   onTimeChange(event: any) {
-    const time = event.detail.value
-    this.selectedTime = this.formatTime(time)
+    this.permissionForm.patchValue({ time: event.detail.value })
   }
+
   handleHours(event: any) {
-    this.selectedHours = event.detail.value
+    this.permissionForm.patchValue({ hours: event.detail.value })
   }
   handleReason(event: any) {
-    this.selectReason = event.detail.value
+    this.permissionForm.patchValue({ reason: event.detail.value })
   }
 
   async handleSave() {
-    if (this.selectedTime.length === 0) {
-      alert("Select Time")
+    if (this.permissionForm.value.time.length === 0) {
+      this.toastService.toast("Select Time")
       return;
     }
-    if (this.selectedHours.length === 0) {
-      alert("Select Hours")
+    if (this.permissionForm.value.hours.length === 0) {
+      this.toastService.toast("Select Hours")
       return;
     }
-    if (this.selectReason.length === 0) {
-      alert("Select Reason")
+    if (this.permissionForm.value.reason.length === 0) {
+      this.toastService.toast("Select Reason")
       return;
     }
     const loading = await this.loadingController.create({
@@ -79,16 +82,10 @@ export class ApplyPermissionPage implements ViewDidEnter {
     });
     await loading.present();
     try {
-      this.service.applyPermission(this.selectedTime, this.selectedHours, this.selectReason).subscribe(async Response => {
+      this.permissionService.applyPermission(this.permissionForm.value.time, this.permissionForm.value.hours, this.permissionForm.value.reason).subscribe(async Response => {
         if (Response.message === "Permission uploaded successfully") {
-          const toast = await this.toastcontroller.create({
-            message: Response.message,
-            duration: 2000,
-            position: "bottom"
-          })
-          await toast.present()
-
-          this.route.navigate(['permission'])
+          this.toastService.toast(Response.message)
+          this.permissionForm.reset();
         } else {
           alert(Response.message)
         }
