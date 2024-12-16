@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/service/authencation.service';
 import { ToastService } from 'src/app/service/toast-service';
 
@@ -9,10 +9,11 @@ import { ToastService } from 'src/app/service/toast-service';
   styleUrls: ['./login-screen.page.scss'],
 })
 export class LoginScreenPage {
-  phoneNumber: any = "";
+  phoneNumber: any = ""
   constructor(private AuthService: AuthenticationService, private toastService: ToastService, private router: Router) { }
 
   async handleSendOTP() {
+    // this.router.navigate(['otp-screen']) //testing purpuse
     if (this.phoneNumber.length < 10 || this.phoneNumber.length > 10) {
       this.toastService.toast("Please enter the valid number")
       return;

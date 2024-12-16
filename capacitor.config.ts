@@ -8,7 +8,12 @@ const config: CapacitorConfig = {
     GoogleMaps: {
       apiKey: 'AIzaSyC6H3lsmFh4_Sh6yt6SArnk1gJbF-Upvvk'
     }
+  },
+  server: {
+    androidScheme: 'http',
+    cleartext: true
   }
+
 };
 
 export default config;

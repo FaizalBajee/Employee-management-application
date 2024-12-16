@@ -40,6 +40,7 @@ export class OtpScreenPage implements ViewDidEnter {
   }
 
   async handleVerify() {
+    // this.route.navigate(['home-screen'])//testing purpuse
     let otp = this.OTP.join("")
     try {
       this.AuthService.verifyOTP(otp, this.phoneNumber).subscribe(Response => {

@@ -18,7 +18,7 @@ export class HttpService {
   {
     return this.httpClient.post<TResponse>(`${this.apiUrl}/${endpoint}`, data, {
       headers: {
-        Authentication: `Bearer ${this.accessToken}`
+        Authorization: `Bearer ${this.accessToken}`
       }
     })
       .pipe(
@@ -30,7 +30,7 @@ export class HttpService {
             
             return this.httpClient.post<TResponse>(`${this.apiUrl}/${endpoint}`, data, {
               headers: {
-                Authentication: `Bearer ${this.accessToken}`
+                Authorization: `Bearer ${this.accessToken}`
               }
             });
           }
